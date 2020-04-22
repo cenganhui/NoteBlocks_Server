@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+    <!--<classPathEntry location="D:\mysql-connector-java-5.1.38.jar"/>-->
+
+    <!--<classPathEntry location="src/main/resources/package/mysql-connector-java-8.0.13.jar"/>-->
+    <classPathEntry location="src/main/resources/package/mysql-connector-java-5.1.39.jar"/>
+
+    <context id="prod" targetRuntime="MyBatis3" defaultModelType="flat">
+        <!-- RowBounds pagination -->
+        <!-- 这个分页插件存在问题，已用pagehelper-spring-boot-starter替代 -->
+        <!--<plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"/>-->
+        <plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin"/>
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <property name="nullCatalogMeansCurrent" value="true"/>
+            <property name="suppressAllComments" value="true"/>
+            <property name="mergeable" value="true"></property>
+        </commentGenerator>
+
+        <!-- jdbc连接 -->
+        <!--<jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"-->
+        <!--connectionURL="jdbc:mysql://localhost:3306/cinema?serverTimezone=GMT%2b8&amp;useUnicode=true&amp;characterEncoding=utf-8" userId="fisher"-->
+        <!--password="12345678"/>-->
+        <!--<jdbcConnection driverClass="com.mysql.jdbc.Driver"-->
+        <!--connectionURL="jdbc:mysql://47.106.14.214:3306/cinema_dev?serverTimezone=GMT%2b8&amp;useUnicode=true&amp;characterEncoding=utf-8" userId="fisher"-->
+        <!--password="12345678"/>-->
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="true"/>
+        </javaTypeResolver>
+
+        <javaModelGenerator targetPackage="com.oms.cinema.model"
+                            targetProject="src/main/java">
+            <!-- 是否针对string类型的字段在set的时候进行trim调用 -->
+            <!--<property name="trimStrings" value="true"/>-->
+            <property name="enableSubPackages" value="true"/>
+        </javaModelGenerator>
+        <!--<sqlMapGenerator  targetProject="src/main/resources" targetPackage="mapping/auto"/>-->
+        <sqlMapGenerator targetPackage="mapperXml" targetProject="MAVEN"/>
+
+        <javaClientGenerator targetPackage="com.oms.cinema.mapper"
+                             targetProject="src/main/java" type="XMLMAPPER">
+        </javaClientGenerator>
+
+        <!-- 表名 先clean 再 mybatis-gen-->
+        <table tableName="order" enableCountByExample="true"
+               enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true" domainObjectName="Order">
+        </table>
+
+    </context>
+</generatorConfiguration>
+

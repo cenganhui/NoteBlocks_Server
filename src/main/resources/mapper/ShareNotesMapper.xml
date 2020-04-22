@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.ShareNotesMapper">
+    <!--  search table notes and return isExist  -->
+    <select id="isTableExist" resultType="int">
+        SELECT count(table_name)
+        FROM information_schema.TABLES
+        WHERE table_name = "share_notes"
+        and table_schema = "noteblocks"
+        ;
+    </select>
+
+    <!--  create new table notes  -->
+    <update id="createTable">
+        create table share_notes(
+        sn_id int primary key auto_increment,
+        u_name varchar(100),
+        sn_times datetime,
+        sn_title varchar(100),
+        sn_content varchar(10000),
+        sn_audioPath varchar(1000),
+        sn_picturePath varchar(1000)
+        )character set utf8mb4;
+    </update>
+
+    <!--  delete data by sn_id  -->
+    <delete id="delDataBySnId" parameterType="int">
+        delete from share_notes where sn_id = #{sn_id};
+    </delete>
+
+    <!--  change data begin               -->
+
+    <!--  only change title by sn_id  -->
+    <update id="setTitleBySnId" parameterType="Map">
+        update share_notes set sn_title = #{sn_title}
+        where sn_id = #{sn_id};
+    </update>
+
+    <!--  only change content by SnId  -->
+    <update id="setContentBySnId" parameterType="Map">
+        update share_notes set sn_content = #{sn_content}
+        where sn_id = #{sn_id};
+    </update>
+
+    <!--  only change times by SnId  -->
+    <update id="setTimesBySnId" parameterType="Map">
+        update share_notes set sn_times = #{sn_times}
+        where sn_id = #{sn_id};
+    </update>
+
+    <!--  only change audioPath by sn_id  -->
+    <update id="setAudioPathBySnId" parameterType="Map">
+        update share_notes set sn_audioPath = #{sn_audioPath}
+        where sn_id = #{sn_id};
+    </update>
+
+    <!--  only change picturePath by sn_id  -->
+    <update id="setPicturePathBySnId" parameterType="Map">
+        update share_notes set sn_picturePath = #{sn_picturePath}
+        where sn_id = #{sn_id};
+    </update>
+
+    <!-- change all property by data-->
+    <update id="fullUpdateData" parameterType="com.example.demo.model.ShareNote">
+        update share_notes set sn_times=#{sn_times},
+        sn_title=#{sn_title},
+        sn_content=#{sn_content},
+        sn_audioPath=#{sn_audioPath},
+        sn_picturePath=#{sn_picturePath}
+        where sn_id=#{sn_id};
+    </update>
+
+    <!--  change data end               -->
+
+    <!--  add new data in database by Class Note model  -->
+    <insert id="addData" parameterType="com.example.demo.model.ShareNote">
+        insert into share_notes(
+        u_name,
+        sn_times,
+        sn_title,
+        sn_content,
+        sn_audioPath,
+        sn_picturePath
+        )
+        values(
+        #{u_name},
+        #{sn_times},
+        #{sn_title},
+        #{sn_content},
+        #{sn_audioPath},
+        #{sn_picturePath}
+        );
+    </insert>
+
+    <!--  get data from database by sn_id -->
+    <select id="searchDataBySnId" parameterType="Map" resultType="com.example.demo.model.ShareNote">
+        select * from share_notes where sn_id = #{sn_id};
+    </select>
+
+    <!--  get all datas -->
+    <select id="getDatas" resultType="com.example.demo.model.ShareNote">
+        select * from share_notes;
+    </select>
+
+    <select id="getMaxSnId" resultType="int">
+        select max(sn_id) from share_notes;
+    </select>
+
+</mapper>

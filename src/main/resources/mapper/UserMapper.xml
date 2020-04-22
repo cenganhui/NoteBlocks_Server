@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.UserMapper">
+    <!--  search table user and return isExist  -->
+    <select id="isTableExist" resultType="int">
+        SELECT count(table_name)
+        FROM information_schema.TABLES
+        WHERE table_name = "user"
+        and table_schema = "noteblocks"
+        ;
+    </select>
+
+    <!--  create new table User -->
+    <update id="createTable">
+        create table user(
+        u_name varchar(100) primary key,
+        u_passwd varchar(100)
+        )character set utf8mb4;
+    </update>
+
+
+    <!--  delete user by name  -->
+    <delete id="delUserByName" parameterType="String">
+        delete from user where u_name = #{u_name};
+    </delete>
+
+    <!--  change data begin               -->
+
+    <!-- change name -->
+    <update id="setName" parameterType="Map">
+        update user set u_name = #{newName}
+        where u_name = #{u_name};
+    </update>
+
+    <!--  only change content by ids  -->
+    <update id="setPasswd" parameterType="Map">
+        update user set u_passwd = #{newPasswd}
+        where u_name = #{u_name}
+    </update>
+    <!--  change data end               -->
+
+
+    <!--  add new user in database by u_name and u_passwd -->
+    <insert id="addUser" parameterType="Map">
+        insert into user( u_name,
+        u_passwd)
+        values( #{u_name},
+        #{u_passwd}
+        );
+    </insert>
+
+    <select id="getPasswd" parameterType="String" resultType="String">
+        select u_passwd from user where u_name = #{u_name};
+    </select>
+</mapper>

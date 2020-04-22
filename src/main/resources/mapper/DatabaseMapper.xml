@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.DatabaseMapper">
+    <!--  search table notes and return isExist  -->
+    <select id="isTableExist" resultType="int">
+        SELECT count(table_name)
+        FROM information_schema.TABLES
+        WHERE table_name = "notes"
+        and table_schema = "noteblocks"
+        ;
+    </select>
+
+    <!--  create new table notes  -->
+    <update id="createTable">
+        create table notes(
+        u_name varchar(100),
+        n_ids int,
+        n_times datetime,
+        n_title varchar(100),
+        n_content varchar(10000),
+        n_audioPath varchar(1000),
+        n_picturePath varchar(1000)
+        )character set utf8mb4;
+    </update>
+
+    <!--  delete data by ids  -->
+    <delete id="delDataByIds" parameterType="Map">
+        delete from notes where n_ids = #{n_ids} and user = #{u_name}
+    </delete>
+
+    <!--  delete data by ids  -->
+    <delete id="delDataById" parameterType="int">
+        delete from notes where n_id = #{n_id}
+    </delete>
+
+    <!--  change data begin               -->
+
+    <!--  only change title by ids  -->
+    <update id="setTitleByIds" parameterType="Map">
+        update notes set n_title = #{n_title}
+        where n_ids = #{n_ids}
+        and u_name = #{u_name};
+    </update>
+
+    <!--  only change content by ids  -->
+    <update id="setContentByIds" parameterType="Map">
+        update notes set n_content = #{n_content}
+        where n_ids = #{n_ids}
+        and u_name = #{u_name};
+    </update>
+
+    <!--  only change times by ids  -->
+    <update id="setTimesByIds" parameterType="Map">
+        update notes set n_times = #{n_times}
+        where n_ids = #{n_ids}
+        and u_name = #{u_name};
+    </update>
+
+    <!--  only change audioPath by ids  -->
+    <update id="setAudioPathByIds" parameterType="Map">
+        update notes set n_audioPath = #{n_audioPath}
+        where n_ids = #{n_ids}
+        and u_name = #{u_name};
+    </update>
+
+    <!--  only change picturePath by ids  -->
+    <update id="setPicturePathByIds" parameterType="Map">
+        update notes set n_picturePath = #{n_picturePath}
+        where n_ids = #{n_ids}
+        and u_name = #{u_name};
+    </update>
+
+    <!-- change all property by data-->
+    <update id="fullUpdateData" parameterType="com.example.demo.model.Note">
+        update notes set n_times=#{n_times},
+        n_title=#{n_title},
+        n_content=#{n_content},
+        n_audioPath=#{n_audioPath},
+        n_picturePath=#{n_picturePath}
+        where n_ids=#{n_ids} and u_name=#{u_name};
+    </update>
+
+    <!--  change data end               -->
+
+    <!--  add new data in database by Class Note model  -->
+    <insert id="addData" parameterType="com.example.demo.model.Note">
+        insert into notes( u_name,
+        n_ids,
+        n_times,
+        n_title,
+        n_content,
+        n_audioPath,
+        n_picturePath
+        )
+        values( #{u_name},
+        #{n_ids},
+        #{n_times},
+        #{n_title},
+        #{n_content},
+        #{n_audioPath},
+        #{n_picturePath}
+        );
+    </insert>
+
+    <!--  get data from database by ids and User -->
+    <select id="searchDataByIds" parameterType="Map" resultType="com.example.demo.model.Note">
+        select * from notes where n_ids = #{n_ids} and u_name = #{u_name};
+    </select>
+
+    <!--  get all datas -->
+    <select id="getDatas" resultType="com.example.demo.model.Note" parameterType="String">
+        select * from notes where u_name = #{u_name};
+    </select>
+
+    <select id="getMaxIds" parameterType="String" resultType="int">
+        select max(ids) from notes where u_name = #{u_name};
+    </select>
+
+</mapper>
