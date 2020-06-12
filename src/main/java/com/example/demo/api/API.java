@@ -22,8 +22,8 @@ import java.util.ArrayList;
  */
 @RestController
 public class API {
-    public static String fileRootPath = "/home/SpringBoot/NoteBlocks/save/";
-    public static String fileUrl = "http://47.112.16.171:8000/NoteBlocks/";
+    public static String fileRootPath = "/home/www/noteblocks";
+    public static String fileUrl = "http://47.115.148.227:8202/noteblocks";
 
     public API() {
     }
