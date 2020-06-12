@@ -22,7 +22,7 @@ import java.util.ArrayList;
  */
 @RestController
 public class API {
-    public static String fileRootPath = "/home/www/noteblocks";
+    public static String fileRootPath = "/home/www/noteblocks/";
     public static String fileUrl = "http://47.115.148.227:8202/noteblocks";
 
     public API() {
