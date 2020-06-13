@@ -69,7 +69,7 @@ public class UserDao {
         System.out.println("UserDao:comparPasswd --" + "name:" + name + ",passwd:" + passwd);
         String truePasswd = userDB.getPasswd(name);
         if (truePasswd != null && truePasswd.equals(passwd)) {
-            return truePasswd;
+            return name;
         }
         return passwdTrue;
     }
