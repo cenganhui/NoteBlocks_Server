@@ -59,6 +59,22 @@ public class UserDao {
     }
 
     /**
+     * 对比密码是否正确
+     * @param name
+     * @param passwd
+     * @return  返回用户名
+     */
+    public static String comparPasswd2(String name, String passwd) {
+        String passwdTrue = "false";
+        System.out.println("UserDao:comparPasswd --" + "name:" + name + ",passwd:" + passwd);
+        String truePasswd = userDB.getPasswd(name);
+        if (truePasswd != null && truePasswd.equals(passwd)) {
+            return truePasswd;
+        }
+        return passwdTrue;
+    }
+
+    /**
      * 创建新用户
      *
      * @param name   用户名

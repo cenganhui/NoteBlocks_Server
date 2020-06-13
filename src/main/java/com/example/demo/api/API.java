@@ -23,7 +23,7 @@ import java.util.ArrayList;
 @RestController
 public class API {
     public static String fileRootPath = "/home/www/noteblocks/";
-    public static String fileUrl = "http://47.115.148.227:8202/noteblocks";
+    public static String fileUrl = "http://47.115.148.227:8202/noteblocks/";
 
     public API() {
     }
@@ -72,7 +72,7 @@ public class API {
     @PostMapping("/comparPasswd")
     public String comparPasswd(@RequestBody User cmpUser) {
         System.out.println("comparPasswd -- " + "u_name:" + cmpUser.getU_name() + ",u_passwd:" + cmpUser.getU_passwd());
-        return "comparPasswd:" + UserDao.comparPasswd(cmpUser.getU_name(), cmpUser.getU_passwd());
+        return "comparPasswd:" + UserDao.comparPasswd2(cmpUser.getU_name(), cmpUser.getU_passwd());
     }
 
     /**
